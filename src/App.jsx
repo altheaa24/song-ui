@@ -41,7 +41,7 @@ export default function App() {
   const [artist, setArtist] = useState("All");
   const [genre, setGenre] = useState("All");
 
-  const API_URL = "https://song-api-sw4i.onrender.com/luriz/songs";
+  const API_URL = "https://song-api-8sdy.onrender.com/luriz/songs";
 
   useEffect(() => {
     fetchSongs();
@@ -52,10 +52,27 @@ export default function App() {
     setError("");
     try {
       const res = await axios.get(API_URL);
+      // Log this to your VS Code console to see what the data actually looks like!
+      console.log("Data from Render:", res.data); 
+      
       const data = Array.isArray(res.data) ? res.data : [];
-      setSongs(data);
-      if (!currentVideo && data?.[0]?.url) setCurrentVideo(data[0].url);
+      
+      // FIX: Ensure every song has a 'genre' and 'artist' string so filters don't crash
+      const sanitizedData = data.map(song => ({
+        ...song,
+        id: song.id || song._id, // Handle MongoDB _id
+        artist: song.artist || "Unknown Artist",
+        genre: song.genre || "Uncategorized",
+        title: song.title || "Untitled"
+      }));
+
+      setSongs(sanitizedData);
+      
+      if (!currentVideo && sanitizedData.length > 0) {
+        setCurrentVideo(sanitizedData[0].url);
+      }
     } catch (err) {
+      console.error(err);
       setError("Failed to sync with library.");
     } finally {
       setLoading(false);
