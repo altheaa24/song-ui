@@ -41,8 +41,8 @@ export default function App() {
   const [artist, setArtist] = useState("All");
   const [genre, setGenre] = useState("All");
 
-  const API_URL = "https://song-api-8sdy.onrender.com/luriz/songs";
-
+ const API_URL = "https://song-api-8sdy.onrender.com/luriz/songs";
+ 
   useEffect(() => {
     fetchSongs();
   }, []);
@@ -51,33 +51,30 @@ export default function App() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get(API_URL);
-      // Log this to your VS Code console to see what the data actually looks like!
-      console.log("Data from Render:", res.data); 
-      
-      const data = Array.isArray(res.data) ? res.data : [];
-      
-      // FIX: Ensure every song has a 'genre' and 'artist' string so filters don't crash
-      const sanitizedData = data.map(song => ({
-        ...song,
-        id: song.id || song._id, // Handle MongoDB _id
-        artist: song.artist || "Unknown Artist",
-        genre: song.genre || "Uncategorized",
-        title: song.title || "Untitled"
-      }));
+        const res = await axios.get(API_URL);
+        console.log("Fetched Data:", res.data); // CHECK YOUR BROWSER CONSOLE (F12)
+        
+        const data = Array.isArray(res.data) ? res.data : [];
+        
+        // Map MongoDB _id to id so your SongCard components don't break
+        const sanitizedData = data.map(song => ({
+            ...song,
+            id: song.id || song._id, 
+            artist: song.artist || "Unknown Artist",
+            genre: song.genre || "All"
+        }));
 
-      setSongs(sanitizedData);
-      
-      if (!currentVideo && sanitizedData.length > 0) {
-        setCurrentVideo(sanitizedData[0].url);
-      }
+        setSongs(sanitizedData);
+        if (!currentVideo && sanitizedData.length > 0) {
+            setCurrentVideo(sanitizedData[0].url);
+        }
     } catch (err) {
-      console.error(err);
-      setError("Failed to sync with library.");
+        console.error("Fetch error:", err);
+        setError("Failed to sync with library.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   const artists = useMemo(() => ["All", ...uniqSorted(songs.map((s) => s.artist))], [songs]);
   const genres = useMemo(() => ["All", ...uniqSorted(songs.map((s) => s.genre))], [songs]);
