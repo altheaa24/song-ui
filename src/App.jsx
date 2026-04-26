@@ -41,7 +41,7 @@ export default function App() {
   const [artist, setArtist] = useState("All");
   const [genre, setGenre] = useState("All");
 
- const API_URL = "https://song-api-8sdy.onrender.com/luriz/songs";
+ const API_URL = "https://song-api-1-cfpa.onrender.com/luriz/songs";
  
   useEffect(() => {
     fetchSongs();
@@ -141,8 +141,8 @@ export default function App() {
                   className="w-full bg-transparent text-[15px] font-medium outline-none text-white placeholder:text-white/20"
                 />
                 <div className="hidden lg:flex items-center gap-1 px-2 py-1 rounded-md bg-white/5 border border-white/10 ml-2">
-                  <span className="text-[10px] text-white/40 font-bold">⌘</span>
-                  <span className="text-[10px] text-white/40 font-bold">K</span>
+                  <span className="text-[10px] text-white/40 font-bold"></span>
+                  <span className="text-[10px] text-white/40 font-bold"></span>
                 </div>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function App() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
             </button>
             <div className="h-10 w-10 rounded-full border-2 border-white/10 bg-gradient-to-br from-slate-800 to-slate-950 p-0.5 shadow-xl">
-               <div className="h-full w-full rounded-full bg-sky-500/10 flex items-center justify-center text-sky-400 text-xs font-black">EX</div>
+               <div className="h-full w-full rounded-full bg-sky-500/10 flex items-center justify-center text-sky-400 text-xs font-black">SP</div>
             </div>
           </div>
         </div>
