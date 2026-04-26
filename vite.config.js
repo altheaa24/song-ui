@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  // ... your existing config (like plugins)
+  preview: {
+    allowedHosts: ['song-ui-2.onrender.com']
+  }
 })
